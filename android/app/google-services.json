@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1021895165429",
+    "project_id": "bass-guide-db",
+    "storage_bucket": "bass-guide-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021895165429:android:c46f68a22a2035f42d0cbc",
+        "android_client_info": {
+          "package_name": "com.jhfishing.catchi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021895165429-g5tun5ap8ovqseljbrhdbo06sk1otd1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jhfishing.catchi",
+            "certificate_hash": "3fb34801a470131b113571163d0ecf00e723d79d"
+          }
+        },
+        {
+          "client_id": "1021895165429-mjbfv3bl4i1edbc0v7humb9mjq7n0t4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPIrTYYLdvMVeMy3hw6cxurCyTtCgBxBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021895165429-mjbfv3bl4i1edbc0v7humb9mjq7n0t4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
