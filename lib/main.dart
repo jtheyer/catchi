@@ -1,4 +1,7 @@
+import 'package:catchi/screens/baits.dart';
+import 'package:catchi/screens/catch.dart';
 import 'package:catchi/screens/dashboard.dart';
+import 'package:catchi/screens/locations.dart';
 import 'package:catchi/screens/login.dart';
 import 'package:catchi/screens/splash.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +12,7 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-} 
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,11 +24,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: LoginScreen.id,
+        initialRoute: Dashboard.id,
         routes: {
-          SplashLoad.id: (context) => const SplashLoad(),
           LoginScreen.id: (context) => const LoginScreen(),
-          Dashboard.id: (context) => const Dashboard()
+          Dashboard.id: (context) => const Dashboard(),
+          CatchPg.id: (context) => const CatchPg(),
+          BaitsPg.id: (context) => const BaitsPg(),
+          LocationsPg.id: (context) => const LocationsPg(),
         });
   }
 }
