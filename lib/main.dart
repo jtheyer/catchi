@@ -3,14 +3,16 @@ import 'package:catchi/screens/catch.dart';
 import 'package:catchi/screens/dashboard.dart';
 import 'package:catchi/screens/locations.dart';
 import 'package:catchi/screens/login.dart';
-import 'package:catchi/screens/splash.dart';
 import 'package:flutter/material.dart';
-import './screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main(List<String> args) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  } catch (e) {
+    print(e);
+  }
   runApp(MyApp());
 }
 
@@ -29,8 +31,16 @@ class MyApp extends StatelessWidget {
           LoginScreen.id: (context) => const LoginScreen(),
           Dashboard.id: (context) => const Dashboard(),
           CatchPg.id: (context) => const CatchPg(),
-          BaitsPg.id: (context) => const BaitsPg(),
+          BaitsPg.id: (context) => BaitsPg(),
           LocationsPg.id: (context) => const LocationsPg(),
         });
+  }
+}
+
+void logError(String code, String? message) {
+  if (message != null) {
+    print('Error: $code\nError Message: $message');
+  } else {
+    print('Error: $code');
   }
 }
