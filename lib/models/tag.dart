@@ -1,4 +1,4 @@
 class Tag {
-  final String label;
-  Tag({required this.label});
+  final String title;
+  Tag({required this.title});
 }

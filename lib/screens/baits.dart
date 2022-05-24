@@ -2,6 +2,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:catchi/screens/add_tag_modal.dart';
+import 'package:provider/provider.dart';
+import 'package:catchi/models/tag_data.dart';
+import 'package:catchi/widgets/tag_list.dart';
 
 class BaitsPg extends StatefulWidget {
   static const id = 'baitsPg';
@@ -16,7 +20,6 @@ class _BaitsPgState extends State<BaitsPg> {
   List<XFile>? _imageFileList;
   bool imageInView = false;
   final TextEditingController _baitDescController = TextEditingController();
-  _tc() => TextEditingController();
   dynamic _pickImageError;
   bool isVideo = false;
   String? _retrieveDataError;
@@ -28,6 +31,11 @@ class _BaitsPgState extends State<BaitsPg> {
   void dispose() {
     _baitDescController.dispose();
     super.dispose();
+  }
+
+  void _saveBait(){
+    //Put the image, desc, and tags into an object
+    
   }
 
   Future<void> _onImageButtonPressed(ImageSource source,
@@ -46,10 +54,6 @@ class _BaitsPgState extends State<BaitsPg> {
         _pickImageError = e;
       });
     }
-  }
-
-  _addTag(val) {
-    print(val);
   }
 
   Widget _previewImages() {
@@ -73,10 +77,13 @@ class _BaitsPgState extends State<BaitsPg> {
                       const SizedBox(height: 5),
                       kIsWeb
                           ? Image.network(_imageFileList![index].path)
-                          : Image.file(File(_imageFileList![index].path)),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
+                          : SizedBox(
+                              height: 300,
+                              width: 250,
+                              child: Image.file(
+                                File(_imageFileList![index].path),
+                              ),
+                            ),
                     ],
                   ),
                 );
@@ -120,6 +127,12 @@ class _BaitsPgState extends State<BaitsPg> {
     }
   }
 
+  Widget TagsDialog() {
+    return const Dialog(
+      child: Text('dialog'),
+    );
+  }
+
   Widget keyboardDismisser(
       {required BuildContext context, required Widget child}) {
     final gesture = GestureDetector(
@@ -144,8 +157,7 @@ class _BaitsPgState extends State<BaitsPg> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
-                flex: 3,
-                // fit: FlexFit.tight,
+                flex: 2,
                 child:
                     !kIsWeb && defaultTargetPlatform == TargetPlatform.android
                         ? FutureBuilder<void>(
@@ -187,7 +199,7 @@ class _BaitsPgState extends State<BaitsPg> {
                   child: TextField(
                     minLines: 2,
                     controller: _baitDescController,
-                    // keyboardType: TextInputType.multiline,
+                    keyboardType: TextInputType.text,
                     maxLines: null,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
@@ -200,28 +212,36 @@ class _BaitsPgState extends State<BaitsPg> {
                   ),
                 ),
               ),
-              const Flexible(
-                flex: 2,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 5, 150, 0),
-                  child: TextField(
-                    // controller: _tc(),
-                    // onEditingComplete: (){ print('done');},
-                    onChanged: ,
-                    // maxLength: 25,
-                    decoration: InputDecoration(
-                      hintText: '\t\tTag bait! ( 1 at a time)'
-                    ),
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 65.0),
+                child: ElevatedButton(
+                    child: const Text('+ Tag'),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: AddTagModal((newTagTitle) {
+                              setState(() {
+                                Provider.of<TagData>(context, listen: false)
+                                    .addTag(newTagTitle);
+                              });
+                            }),
+                          ),
+                        ),
+                      );
+                    }),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-
-              //   ],
-              // ),
+              const Flexible(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: TagList(),
+                ),
+              )
             ],
           ),
         ),
@@ -247,9 +267,20 @@ class _BaitsPgState extends State<BaitsPg> {
                   isVideo = false;
                   _onImageButtonPressed(ImageSource.camera, context: context);
                 },
-                heroTag: 'image2',
+                heroTag: 'image1',
                 tooltip: 'Take a Photo',
                 child: const Icon(Icons.camera_alt),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  _saveBait();
+                },
+                heroTag: 'image2',
+                tooltip: 'Add to Tacklebox',
+                child: const Icon(Icons.check),
               ),
             ),
           ],
